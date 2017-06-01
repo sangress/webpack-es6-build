@@ -2,11 +2,15 @@
  * Created by sangress on 01/06/2017.
  */
 
+import {createStore} from 'redux';
+import {sampleReducer} from './reducers';
 
-let f = (s) => {
-    document.write(`Output: ${s}`);
-};
+let store = createStore(sampleReducer);
 
-// f('okay!');
+let addOne = () => {
+    store.dispatch({type: 'ADD_ONE', payload: 1});
+    console.log('state', store.getState());
+}
 
-
+window.addOne = addOne;
+console.log('state', store.getState());
