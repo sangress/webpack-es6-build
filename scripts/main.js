@@ -2,14 +2,20 @@
  * Created by sangress on 01/06/2017.
  */
 
-import {createStore} from 'redux';
+import {createStore, applyMiddleware} from 'redux';
 import {sampleReducer} from './reducers';
+import {epicMiddleware} from './epics';
 
-let store = createStore(sampleReducer);
+let store = createStore(sampleReducer, applyMiddleware(epicMiddleware));
+let resBox = document.querySelector('#result');
 
-let addOne = () => {
-    store.dispatch({type: 'ADD_ONE', payload: 1});
-    console.log('state', store.getState());
+store.subscribe(() => {
+    console.log('subscribe', store.getState());
+    resBox.innerHTML = JSON.stringify(store.getState());
+});
+
+let getUser = (id) => {
+    store.dispatch({type: 'GET_USER', payload: 1});
 }
 
 window.addOne = addOne;
